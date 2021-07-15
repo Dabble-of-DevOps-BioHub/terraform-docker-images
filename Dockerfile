@@ -46,9 +46,11 @@ RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master
 
 ## EKSCTL
 
-RUN curl --silent --location \
-    "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp \
-    mv /tmp/eksctl /usr/local/bin && \
+RUN curl -L -o eksctl.tar.gz \
+    "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz"  \
+    && tar -xvf eksctl.tar.gz \
+    && chmod 777 eksctl \
+    mv eksctl /usr/local/bin && \
     eksctl version
 
 ## Terraform
