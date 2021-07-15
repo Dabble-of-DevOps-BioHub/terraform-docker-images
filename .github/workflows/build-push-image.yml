@@ -5,9 +5,9 @@
 
 name: Create and publish a Docker image
 
-#on:
-#  push:
-#    branches: ['release']
+on:
+  push:
+    branches: ['master']
 
 env:
   REGISTRY: docker.io
