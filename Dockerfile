@@ -50,8 +50,8 @@ RUN curl -L -o eksctl.tar.gz \
     "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz"  \
     && tar -xvf eksctl.tar.gz \
     && chmod 777 eksctl \
-    mv eksctl /usr/local/bin && \
-    eksctl version
+    && mv eksctl /usr/local/bin
+    && eksctl version
 
 ## Terraform
 
