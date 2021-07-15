@@ -1,10 +1,6 @@
-#FROM continuumio/miniconda3:latest
 FROM python:slim
 
 # This image is just to get the various cli tools I need for the aws eks service
-# AWS CLI - Whatever the latest version is
-# AWS IAM Authenticator - 1.12.7
-# Kubectl - 1.12.7
 
 USER root
 ARG TERRAFORM_VERSION="0.14.0"
@@ -32,11 +28,10 @@ RUN pip install --upgrade ipython troposphere boto3 paramiko
 # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
 RUN curl -o aws-iam-authenticator \
     https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/aws-iam-authenticator && \
-    chmod +x ./aws-iam-authenticator
+    chmod +x ./aws-iam-authenticator && \
+    mkdir -p ~/bin && cp ./aws-iam-authenticator ~/bin/aws-iam-authenticator
 
-RUN mkdir -p ~/bin && cp ./aws-iam-authenticator ~/bin/aws-iam-authenticator
-
-RUN    curl -LO https://dl.k8s.io/release/v1.21.0/bin/linux/amd64/kubectl && \
+RUN curl -LO https://dl.k8s.io/release/v1.21.0/bin/linux/amd64/kubectl && \
     chmod +x ./kubectl && \
     mv ./kubectl ~/bin/kubectl && \
     kubectl version --client
@@ -60,8 +55,8 @@ RUN curl --silent --location \
 
 RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+    && chmod 777 terraform \
     && mv terraform /usr/local/bin \
     && rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 WORKDIR /root
-
