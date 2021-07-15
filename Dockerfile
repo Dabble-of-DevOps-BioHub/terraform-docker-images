@@ -7,9 +7,12 @@ ARG TERRAFORM_VERSION="0.14.0"
 # ARG TERRAFORM_VERSION="0.12.28"
 # ARG AWS_IAM_AUTHENTICATION_VERSION="1.12.7"
 ARG KUBECTL_VERSION="1.21.2"
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -y; apt-get upgrade -y; \
-    apt-get install -y curl wget vim-tiny vim-athena jq unzip git
+    apt-get install -y curl wget vim-tiny vim-athena jq unzip git build-essential && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
 
