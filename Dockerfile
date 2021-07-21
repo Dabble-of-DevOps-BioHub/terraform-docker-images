@@ -24,7 +24,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     unzip awscliv2.zip && \
     ./aws/install
 
-RUN pip install --upgrade ipython troposphere boto3 paramiko
+RUN pip install --upgrade ipython troposphere boto3 paramiko Jinja2 cookiecutter
 
 # Install clis needed for kubernetes + eks
 
