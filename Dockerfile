@@ -25,7 +25,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 
 RUN pip install --upgrade ipython troposphere boto3 paramiko Jinja2 cookiecutter hiyapyco \
-	jupyter-book sphinx pytest pandas s3fs aws-batch-helpers
+	jupyter-book sphinx pytest pandas s3fs livereload
 
 # Install clis needed for kubernetes + eks
 
