@@ -22,9 +22,12 @@ RUN echo 'alias l="ls -lah"' >> ~/.bashrc
 
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && \
-    ./aws/install
+    ./aws/install && \
+    rm -rf awscliv2.zip
 
-RUN pip install --upgrade ipython troposphere boto3 paramiko Jinja2 cookiecutter
+
+RUN pip install --upgrade ipython troposphere boto3 paramiko Jinja2 cookiecutter hiyapyco \
+	jupyter-book sphinx pytest pandas s3fs aws-batch-helpers
 
 # Install clis needed for kubernetes + eks
 
