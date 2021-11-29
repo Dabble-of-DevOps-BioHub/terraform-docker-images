@@ -8,13 +8,24 @@ ARG KUBECTL_VERSION="1.21.2"
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -y; apt-get upgrade -y; \
-    apt-get install -y curl wget vim-tiny vim-athena jq unzip git build-essential && \
+    apt-get install -y golang-go curl wget vim-tiny vim-athena jq unzip git build-essential && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
 
-ENV PATH=/root/bin:$PATH
+ENV PATH=/root/bin:/usr/local/bin:$PATH
+
+RUN curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
+RUN curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz && \
+	tar -xzf terraform-docs.tar.gz && \
+	chmod +x terraform-docs && \
+	mv terraform-docs /usr/local/terraform-docs
+
+RUN git clone https://github.com/bats-core/bats-core.git && \
+	 cd bats-core ; ./install.sh /usr/local
+
 RUN echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
 RUN echo 'alias l="ls -lah"' >> ~/.bashrc
 
@@ -22,7 +33,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     unzip awscliv2.zip && \
     ./aws/install && \
     rm -rf awscliv2.zip
-
 
 RUN pip install --upgrade ipython troposphere boto3 paramiko Jinja2 cookiecutter hiyapyco \
 	jupyter-book sphinx pytest pandas s3fs livereload
