@@ -104,7 +104,8 @@ RUN make -s template/deps readme/deps
 RUN make -s go/deps-build go/deps-dev
 
 # Use Terraform 1 by default
-ARG DEFAULT_TERRAFORM_VERSION=1
+#ARG DEFAULT_TERRAFORM_VERSION=1
+ARG DEFAULT_TERRAFORM_VERSION=0.14
 RUN update-alternatives --set terraform /usr/share/terraform/$DEFAULT_TERRAFORM_VERSION/bin/terraform && \
   mkdir -p /build-harness/vendor && \
   cp -p /usr/share/terraform/$DEFAULT_TERRAFORM_VERSION/bin/terraform /build-harness/vendor/terraform

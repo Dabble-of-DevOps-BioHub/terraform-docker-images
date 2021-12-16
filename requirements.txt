@@ -1,0 +1,16 @@
+pytest
+pandas
+numpy
+s3fs
+hiyapyco
+ruamel.yaml
+pytest
+jupyter-book>0.12
+ipython
+formic2
+cookiecutter
+livereload
+colorlog
+GitPython
+boto3
+sphinx-sitemap

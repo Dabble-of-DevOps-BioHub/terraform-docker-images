@@ -11,7 +11,8 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: dabbleofdevops/terraform 
+  IMAGE_NAME: dabbleofdevops/terraform
+
 
 jobs:
   build-and-push-image:
@@ -19,6 +20,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+    strategy:
+      matrix:
+        terraform: [0.14, 1]
 
     steps:
       - name: Checkout repository
@@ -40,7 +44,9 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
+          build-args: |
+            DEFAULT_TERRAFORM_VERSION=${{matrix.terraform}}
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:terraform-1.0
+          tags: ${{ steps.meta.outputs.tags }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:terraform-${{matrix.terraform}}
           labels: ${{ steps.meta.outputs.labels }}
