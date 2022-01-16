@@ -61,6 +61,11 @@ RUN curl -o aws-iam-authenticator \
     chmod +x ./aws-iam-authenticator && \
     mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
 
+
+
+RUN curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp; \
+	mv /tmp/eksctl /usr/local/bin
+
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -fsSL --retry 3 https://apk.cloudposse.com/install.sh | bash
 
